@@ -1,0 +1,53 @@
+// Made with Blockbench 4.0.1
+	// Exported for Minecraft version 1.15
+	// Paste this class into your mod and generate all required imports
+
+	package Test;
+
+	public class Dog extends EntityModel<Entity> {
+private final ModelPart bb_main;
+	private final ModelPart rear_tip;
+	private final ModelPart lear_tip;
+public kanisentity() {
+		textureWidth = 16;
+		textureHeight = 16;
+		bb_main = new ModelPart(this);
+		bb_main.setPivot(0.0F, 24.0F, 0.0F);
+		bb_main.setTextureOffset(0, 0).addCuboid(-1.575F, -9.225F, -5.925F, 3.0F, 3.0F, 10.0F, 1.35F, false);
+		bb_main.setTextureOffset(0, 0).addCuboid(-2.55F, -5.15F, -6.45F, 2.0F, 5.0F, 2.0F, 0.15F, false);
+		bb_main.setTextureOffset(0, 0).addCuboid(-2.55F, -5.15F, 2.925F, 2.0F, 5.0F, 2.0F, 0.15F, false);
+		bb_main.setTextureOffset(0, 0).addCuboid(0.45F, -5.15F, 2.925F, 2.0F, 5.0F, 2.0F, 0.15F, false);
+		bb_main.setTextureOffset(0, 4).addCuboid(0.45F, -5.15F, -6.45F, 2.0F, 5.0F, 2.0F, 0.15F, false);
+		bb_main.setTextureOffset(0, 0).addCuboid(-2.0F, -12.075F, -10.675F, 4.0F, 4.0F, 3.0F, 0.35F, false);
+		bb_main.setTextureOffset(0, 4).addCuboid(-0.9125F, -10.1625F, -13.2125F, 2.0F, 2.0F, 3.0F, 0.175F, false);
+
+		rear_tip = new ModelPart(this);
+		rear_tip.setPivot(-1.2258F, -12.1916F, -9.2839F);
+		bb_main.addChild(rear_tip);
+		setRotationAngle(rear_tip, -0.1745F, 0.0F, -0.0873F);
+		rear_tip.setTextureOffset(8, 0).addCuboid(-1.5242F, -3.25F, -1.0F, 3.0F, 3.0F, 2.0F, -0.75F, false);
+		rear_tip.setTextureOffset(8, 0).addCuboid(-1.5242F, -2.25F, -1.0F, 3.0F, 3.0F, 2.0F, -0.55F, false);
+
+		lear_tip = new ModelPart(this);
+		lear_tip.setPivot(1.3F, -12.1742F, -9.2839F);
+		bb_main.addChild(lear_tip);
+		setRotationAngle(lear_tip, -0.1745F, 0.0F, 0.0873F);
+		lear_tip.setTextureOffset(8, 5).addCuboid(-1.5F, -3.25F, -1.0F, 3.0F, 3.0F, 2.0F, -0.75F, false);
+		lear_tip.setTextureOffset(8, 5).addCuboid(-1.5F, -2.25F, -1.0F, 3.0F, 3.0F, 2.0F, -0.55F, false);
+}
+@Override
+public void setAngles(Entity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch){
+		//previously the render function, render code was moved to a method below
+}
+@Override
+public void render(MatrixStack matrixStack, VertexConsumer	buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha){
+		
+		bb_main.render(matrixStack, buffer, packedLight, packedOverlay);
+}
+public void setRotationAngle(ModelPart bone, float x, float y, float z) {
+		bone.pitch = x;
+		bone.yaw = y;
+		bone.roll = z;
+}
+
+	}
