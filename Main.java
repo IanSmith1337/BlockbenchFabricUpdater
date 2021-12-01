@@ -39,7 +39,6 @@ public class Main {
             List<String> modelParts = new ArrayList<String>();
             while (mpReader.hasNextLine()) {
                 if(mpLine.contains("private")) {
-                    System.out.println(mpLine.trim().split(" ")[3].replace(";", ""));
                     modelParts.add(mpLine.trim().split(" ")[3].replace(";", ""));
                     writer.write("    " + mpLine + "\n");
                 }
@@ -54,6 +53,7 @@ public class Main {
             }
             writer.write("\n}\n\npublic static TexturedModelData getTexturedModelData() {\n");
             HashMap<String, String> bones = new HashMap<String, String>();
+            ArrayList<String> inittedBones = new ArrayList<String>();
             while (reader.hasNextLine()) {
                 if(!line.contains("//") && !line.contains("class") && !line.contains("package") && !line.isBlank()) {
                     line = line.trim();
@@ -108,13 +108,17 @@ public class Main {
                             String Dilation = "new Dilation(" + attrValues[6] + ")), ";
                             String objectPivot = "createModelTransform(" + pivot.getX() + ", " + pivot.getY() + ", " + pivot.getZ();
                             String objectRotation = ", " + rot.getX() + ", " + rot.getY() + ", " + rot.getZ() + ");\n";
-                            System.out.println("Current Part: " + part + ". Entry: " + bones.get(part));
+                            System.out.println("Current Part: " + part + ". Parent Bone: " + bones.get(part));
+                            line = "//" + part + "\n";
                             if (bones.get(part) == null) {
                                 System.out.println("Null Part: " + part);
-                                bones.put(part, "body");
-                            } else if (part != "body") {
-                                line = "\n/* add \"ModelPartData mpd" + bones.get(part) + " =\" to the start of this line if necessary. */ \n\n" + 
-                                bones.get(part) + ".addChild(<EntityModelPartName here>, ModelPartBuilder.create().uv(0, 0).cuboid(";
+                                bones.put(part, part);
+                            }
+                            if(!(inittedBones.contains(part))) {
+                                line = line.concat("ModelPartData " + part + " = " + bones.get(part) + ".addChild(<EntityModelPartName here>, ModelPartBuilder.create().uv(0, 0).cuboid(");
+                                inittedBones.add(part);
+                            } else {
+                                line = line.concat(bones.get(part) + ".addChild(<EntityModelPartName here>, ModelPartBuilder.create().uv(0, 0).cuboid(");   
                             }
                             for (int i = 0; i < 6; i++) {
                                 line = line.concat(attrValues[i] + ", ");
@@ -136,12 +140,11 @@ public class Main {
                                     bones.put(currentChild, part);
                                 }
                             }
-                            System.out.println(bones.toString());
                         }
                     }
                     
                     if(line.contains("public")) {
-                        writer.write("ModelData md = new ModelData();\nModelPartData mpdbody = md.getRoot();\n");
+                        writer.write("ModelData md = new ModelData();\nModelPartData " + modelParts.get(0) + " = md.getRoot();\n");
                     }
                 }
                 line = reader.nextLine();
