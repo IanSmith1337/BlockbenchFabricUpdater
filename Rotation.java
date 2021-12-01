@@ -33,4 +33,10 @@ class Rotation {
     public void setZ(String rotValue) {
         this.z = rotValue;
     }
+
+    public void reset() {
+        this.x = "0";
+        this.y = "0";
+        this.z = "0";
+    }
 }

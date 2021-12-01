@@ -10,6 +10,12 @@ class Pivot {
         this.z = pz;
     }
 
+    public void reset() {
+        this.x = "0";
+        this.y = "0";
+        this.z = "0";
+    }
+
     public String getX() {
         return this.x;
     }
